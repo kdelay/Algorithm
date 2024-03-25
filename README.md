@@ -1,2 +1,5 @@
-# Backjoon_Algorithm
-This is an auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+# Algorithm
+매일매일 열심히 풀자!!  
+알고리즘은 꾸준함이 답이다.
+
+백준 https://solved.ac/profile/kdelay2000
