@@ -1,31 +1,21 @@
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
   public static void main(String[] args) {
     Scanner sc = new Scanner(System.in);
-    char[] input = sc.nextLine().toCharArray();
-    Map<Character, Integer> map = new HashMap<>();
+    String input = sc.nextLine();
+    int time = 0;
 
-    int count = 0, data = 3;
-    for (int i=65; i<=90; i++) {
-      map.put((char)i, data);
-      count++;
-      if (i == 83) { // S인 경우
-        map.replace((char)i, 8);
-        count = 0;
-      }
-      if (i == 90) { // Z인 경우
-        map.replace((char)i, 10);
-      }
-      if (count == 3) { count = 0; data++; }
+    for (int i=0; i<input.length(); i++) {
+      if (input.charAt(i) < 'D') time += 3;
+      else if (input.charAt(i) < 'G') time += 4;
+      else if (input.charAt(i) < 'J') time += 5;
+      else if (input.charAt(i) < 'M') time += 6;
+      else if (input.charAt(i) < 'P') time += 7;
+      else if (input.charAt(i) < 'T') time += 8;
+      else if (input.charAt(i) < 'W') time += 9;
+      else if (input.charAt(i) <= 'Z') time += 10;
     }
-
-    int sum = 0;
-    for (int i=0; i<input.length; i++) {
-      sum += map.get(input[i]);
-    }
-    System.out.println(sum);
+    System.out.println(time);
   }
 }
