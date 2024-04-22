@@ -13,9 +13,8 @@ public class Main {
     for (int i=0; i<N; i++) arr[i] = Integer.parseInt(br.readLine());
     Arrays.sort(arr, Collections.reverseOrder()); // 내림차순 정렬
 
-    int[] weight = new int[arr.length];
-    for (int i=0; i<arr.length; i++) weight[i] = arr[i] * (i+1); // 가능한 중량 저장
-
-    System.out.println(Arrays.stream(weight).max().getAsInt());
+    int max = 0;
+    for (int i=0; i<arr.length; i++) max = Math.max(max, arr[i] * (i+1)); // 가능한 중량 저장
+    System.out.println(max);
   }
 }
