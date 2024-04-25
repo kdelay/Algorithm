@@ -3,47 +3,46 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-  static int[][] call;
-  static int[] topDown_memo;
+
+  static int[][] arr;
+  static int[] f;
 
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     StringBuilder sb = new StringBuilder();
-
     int T = Integer.parseInt(br.readLine());
 
-    for (int i=0; i<T; i++) {
+    while (T-- > 0) {
       int N = Integer.parseInt(br.readLine());
-      topDown_memo = new int[N+1];
-      call = new int[N+2][2];
+      arr = new int[N+2][2];
+      f = new int[N+1];
 
-      fibonacci(N);
-      sb.append(call[N][0]).append(" ").append(call[N][1]).append("\n");
+      fibo(N);
+      sb.append(arr[N][0]).append(" ").append(arr[N][1]).append("\n");
     }
     System.out.println(sb);
   }
 
-  public static int fibonacci(int N) {
-    // 기저 상태 도달 시, 값 초기화 및 호출 횟수 저장
+  private static int fibo(int N) {
+
+    // under value
     if (N == 0) {
-      call[0][0] = 1; // 0 값은 1개
-      call[0][1] = 0; // 1 값은 0개
-      return topDown_memo[0] = 0;
-    }
-    else if (N == 1) {
-      call[1][0] = 0; // 0 값은 0개
-      call[1][1] = 1; // 1 값은 1개
-      return topDown_memo[1] = 1;
+      arr[0][0] = 1;
+      arr[0][1] = 0;
+      return f[0] = 0;
+    } else if (N == 1) {
+      arr[1][0] = 0;
+      arr[1][1] = 1;
+      return f[1] = 1;
     }
 
-    // 저장된 값이 있는 경우 그대로 사용
-    if (topDown_memo[N] > 0) {
-      return topDown_memo[N];
+    if (f[N] > 0) { // 이미 값이 설정되어 있는 경우
+      return f[N];
     }
-    // 재귀 함수로 값 저장
-    topDown_memo[N] = fibonacci(N-1) + fibonacci(N-2);
-    call[N][0] = call[N-1][0] + call[N-2][0];
-    call[N][1] = call[N-1][1] + call[N-2][1];
-    return topDown_memo[N];
+
+    f[N] = fibo(N-1) + fibo(N-2);
+    arr[N][0] = arr[N-1][0] + arr[N-2][0]; // 0 호출 횟수
+    arr[N][1] = arr[N-1][1] + arr[N-2][1]; // 1 호출 횟수
+    return f[N];
   }
 }
