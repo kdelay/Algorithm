@@ -3,18 +3,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
-  static Integer[] dp;
+
   public static void main(String[] args) throws IOException {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-    int N = Integer.parseInt(br.readLine());
-
-    dp = new Integer[N + 1];
-    System.out.println(func(N, 0));
+    long N = Long.parseLong(br.readLine());
+    System.out.println(dynamic(N, 0));
   }
 
-  private static int func(int N, int count) {
+  private static int dynamic(long N, int count) {
+    // 1인 경우
     if (N < 2) return count;
-    return Math.min( func(N/2, count+1+(N%2)), func(N/3, count+1+(N%3)) );
+
+    return Math.min(
+        dynamic(N/2, (int) (count+1+(N%2))),
+        dynamic(N/3, (int) (count+1+(N%3)))
+    );
   }
 }
