@@ -5,14 +5,13 @@ import java.util.*;
 
 public class Main {
 
-    static int w, h, landNum = 0;
+    static int w, h;
 
-    static int[][] arr;
-    static boolean[][] visited;
+    static int[][] map;
     static List<Integer> island;
 
-    static int[] dx = {0, 1, 0, -1};
-    static int[] dy = {1, 0, -1, 0};
+    static int[] dx = {0, 0, 1, -1, 1, 1, -1, -1};
+    static int[] dy = {1, -1, 0, 0, 1, -1, 1, -1};
 
 
     public static void main(String[] args) throws IOException{
@@ -27,67 +26,41 @@ public class Main {
             h = Integer.parseInt(st.nextToken());
 
             //종료 조건
-            if (w == 0 && h == 0) {
-                for (int i : island) System.out.println(i);
-                return;
-            }
+            if (w == 0 && h == 0) break;
 
             //초기값
-            arr = new int[h][w];
-            visited = new boolean[h][w];
-            for (int i=0; i<h; i++) {
+            map = new int[h+2][w+2];
+            for (int i=1; i<=h; i++) {
                 st = new StringTokenizer(br.readLine());
-                for (int j=0; j<w; j++) {
-                    arr[i][j] = Integer.parseInt(st.nextToken());
+                for (int j=1; j<=w; j++) {
+                    map[i][j] = Integer.parseInt(st.nextToken());
                 }
             }
-
-            for (int i=0; i<h; i++) {
-                for (int j=0; j<w; j++) {
-                    //섬이 있고 아직 방문하지 않은 경우
-                    if (arr[i][j] == 1 && !visited[i][j]) {
-                        visited[i][j] = true;
+            int cnt = 0;
+            for (int i=1; i<=h; i++) {
+                for (int j=1; j<=w; j++) {
+                    //섬이 있는 경우
+                    if (map[i][j] == 1) {
                         bfs(i, j);
-                        landNum++;
+                        cnt++;
                     }
                 }
             }
-            island.add(landNum);
-            landNum = 0;
+            System.out.println(cnt);
         }
     }
 
     private static void bfs(int x, int y) {
-        Queue<int[]> queue = new LinkedList<>();
-        queue.add(new int[] {x, y});
-        visited[x][y] = true;
+        //종료 조건
+        if(map[x][y] == 0) return;
 
-        while (!queue.isEmpty()) {
-            int[] poll = queue.poll();
-            int px = poll[0];
-            int py = poll[1];
-            int[] nx = {px-1, px-1, px+1, px+1};
-            int[] ny = {py-1, py+1, py-1, py+1};
+        map[x][y] = 0; //visited 대신에 0 대입
 
+        for (int i=0; i<8; i++) {
+            int a = x + dx[i];
+            int b = y + dy[i];
+            bfs(a, b);
 
-            for (int i=0; i<4; i++) {
-                //상하좌우
-                int a = px + dx[i];
-                int b = py + dy[i];
-                //대각선
-                int c = nx[i];
-                int d = ny[i];
-
-                //같은 섬인 경로가 있고, 방문하지 않은 섬인 경우
-                if (a >= 0 && b >= 0 && a < h && b < w && !visited[a][b] && arr[a][b] == 1) {
-                    queue.add(new int[] {a, b});
-                    visited[a][b] = true;
-                }
-                if (c >= 0 && d >= 0 && c < h && d < w && !visited[c][d] && arr[c][d] == 1) {
-                    queue.add(new int[] {c, d});
-                    visited[c][d] = true;
-                }
-            }
         }
     }
 }
