@@ -19,20 +19,16 @@ class Solution {
         int answer = 0;
 
         //회원 가입 최대 날짜 범위
-        A: for (int i = 0; i <= discount.length-10; i++) {
+        for (int i = 0; i <= discount.length-10; i++) {
             dis_map = new HashMap<>();
 
             //회원은 10개만 할인 받을 수 있음
             for (int j = i; j < i+10; j++) {
-                //원하는 물건이 아닌 경우
-                if (!want_map.containsKey(discount[j])) continue A;
-
                 dis_map.put(discount[j], dis_map.getOrDefault(discount[j], 0) + 1);
-
-                //연속적으로 일치가 안되는 경우(원하는 물건보다 개수가 많은 경우)
-                if (dis_map.get(discount[j]) > want_map.get(discount[j])) continue A;
             }
-            answer++;
+
+            //할인하는 상품의 개수가 수량과 일치하는 경우
+            if (dis_map.equals(want_map)) answer++;
         }
         return answer;
     }
