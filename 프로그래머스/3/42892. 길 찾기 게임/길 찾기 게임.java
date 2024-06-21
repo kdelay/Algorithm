@@ -36,14 +36,14 @@ class Solution {
                     if (parent.left == null) {
                         parent.left = nodes[i];
                         break;
-                    } else parent = parent.left;
+                    } else parent = parent.left; //left 서브 트리 노드를 parent로 변경하고 null이 나올 때까지 진행
                 }
                 //부모 노드의 x좌표가 더 작거나 같으면 오른쪽으로
                 else {
                     if (parent.right == null) {
                         parent.right = nodes[i];
                         break;
-                    } else parent = parent.right;
+                    } else parent = parent.right; //right 서브 트리 노드를 parent로 변경하고 null이 나올 때까지 진행
                 }
             }
         }
@@ -52,7 +52,7 @@ class Solution {
 
     //전위 순회 메서드
     private static void preOrder(Node curr, ArrayList<Integer> answer) {
-        if (curr == null) return;
+        if (curr == null) return; //리프 노드 종료
         answer.add(curr.num);
         preOrder(curr.left, answer);
         preOrder(curr.right, answer);
@@ -60,7 +60,7 @@ class Solution {
     
     //후위 순회 메서드
     private static void postOrder(Node curr, ArrayList<Integer> answer) {
-        if (curr == null) return;
+        if (curr == null) return; //리프 노드 종료
         postOrder(curr.left, answer);
         postOrder(curr.right, answer);
         answer.add(curr.num);
