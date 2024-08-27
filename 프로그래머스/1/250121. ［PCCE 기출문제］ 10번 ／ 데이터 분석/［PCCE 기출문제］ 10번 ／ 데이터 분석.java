@@ -1,49 +1,34 @@
 import java.util.*;
+import java.util.stream.*;
 
 class Solution {
     
     public int[][] solution(int[][] data, String ext, int val_ext, String sort_by) {
         
-        int filterIndex = -1;
-        switch (ext) {
-            case "code":
-                filterIndex = 0; break;
-            case "date":
-                filterIndex = 1; break;
-            case "maximum":
-                filterIndex = 2; break;
-            case "remain":
-                filterIndex = 3; break;
-        }
+        int filterIndex = getIndex(ext);
+        int sortedIndex = getIndex(sort_by);
 
-        int sortedIndex = -1;
-        switch (sort_by) {
-            case "code":
-                sortedIndex = 0; break;
-            case "date":
-                sortedIndex = 1; break;
-            case "maximum":
-                sortedIndex = 2; break;
-            case "remain":
-                sortedIndex = 3; break;
-        }
-
-        List<int[]> list = new ArrayList<>();
-
-        for (int[] d : data) {
-            if (d[filterIndex] < val_ext) {
-                list.add(d);
-            }
-        }
-
-        int index = sortedIndex;
-        list.sort((o1, o2) -> Integer.compare(o1[index], o2[index]));
+        List<int[]> list = Arrays.stream(data)
+            .filter(d -> d[filterIndex] < val_ext) //val_ext 보다 작은 데이터 필터
+            .sorted(Comparator.comparingInt(d -> d[sortedIndex])) //오름차순 정렬
+            .collect(Collectors.toList());
         
-        int[][] answer = new int[list.size()][];
-        for (int i = 0; i < list.size(); i++) {
-            answer[i] = list.get(i);
+        return list.stream()
+            .toArray(int[][]::new);
+    }
+    
+    private int getIndex(String title) {
+        switch (title) { 
+            case "code":
+                return 0;
+            case "date":
+                return 1;
+            case "maximum":
+                return 2;
+            case "remain":
+                return 3;
+            default:
+                return -1;
         }
-
-        return answer;
     }
 }
