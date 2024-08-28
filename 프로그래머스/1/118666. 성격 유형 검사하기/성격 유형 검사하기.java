@@ -1,27 +1,37 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 class Solution {
     public String solution(String[] survey, int[] choices) {
-    Map<Character, Integer> score = new HashMap<>(); // 설문 항목별 점수 배열
-
-    for (int i=0; i<survey.length; i++) {
-      int value = choices[i];
-      char ch;
-      if (value > 0 && value < 4) { // 부정적인 답변인 경우
-         ch = survey[i].charAt(0); // 첫 번째 요소를 key로 설정
-        score.put(ch, score.getOrDefault(ch, 0) + 4 - value); // key의 value를 설정한다.
-      } else if (value > 4) { // 긍정적인 답변인 경우
-        ch = survey[i].charAt(1); // 두 번째 요소를 key로 설정
-        score.put(ch, score.getOrDefault(ch, 0) + value - 4); // key의 value를 설정한다.
-      }
-    }
-
-    return new StringBuilder() // 문자열 조합
-        .append(score.getOrDefault('R', 0) >= score.getOrDefault('T', 0) ? 'R' : 'T')
-        .append(score.getOrDefault('C', 0) >= score.getOrDefault('F', 0) ? 'C' : 'F')
-        .append(score.getOrDefault('J', 0) >= score.getOrDefault('M', 0) ? 'J' : 'M')
-        .append(score.getOrDefault('A', 0) >= score.getOrDefault('N', 0) ? 'A' : 'N')
-        .toString();
+        
+        Map<Character, Integer> mbti = new HashMap<>();
+        mbti.put('R', 0);
+        mbti.put('T', 0);
+        mbti.put('C', 0);
+        mbti.put('F', 0);
+        mbti.put('J', 0);
+        mbti.put('M', 0);
+        mbti.put('A', 0);
+        mbti.put('N', 0);
+        
+        for (int i = 0; i < choices.length; i++) {
+            //비동의
+            if (choices[i] < 4) {
+                char c = survey[i].charAt(0);
+                mbti.put(c, (mbti.getOrDefault(c, 0) + (4 - choices[i])));
+            } 
+            //동의
+            else if (choices[i] > 4) {
+                char c = survey[i].charAt(1);
+                mbti.put(c, (mbti.getOrDefault(c, 0) + (choices[i] - 4)));
+            } else continue; //모르겠음
+        }
+        
+        String answer = "";
+        answer += (mbti.get('T') > mbti.get('R')) ? "T" : "R";
+        answer += (mbti.get('F') > mbti.get('C')) ? "F" : "C";
+        answer += (mbti.get('M') > mbti.get('J')) ? "M" : "J";
+        answer += (mbti.get('N') > mbti.get('A')) ? "N" : "A";
+        
+        return answer;
     }
 }
