@@ -16,7 +16,6 @@ class Solution {
                 }
             }
         }
-        int[] answer = {lux, luy, rdx+1, rdy+1};
-        return answer;
+        return new int[]{lux, luy, rdx+1, rdy+1};
     }
 }
