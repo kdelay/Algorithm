@@ -3,41 +3,28 @@ import java.util.*;
 class Solution {
     public int solution(int[] bandage, int health, int[][] attacks) {
         
-        int skill = bandage[0], heal = bandage[1], addHeal = bandage[2];
+        int success = bandage[0]; //연속 성공 기준
+        int now = health; //현재 체력
+        int lastAttack = 0; //마지막 공격 당한 턴
         
-        int lastTurn = 0;
-        Map<Integer, Integer> monster = new HashMap<>();
         for (int[] attack : attacks) {
-            monster.put(attack[0], attack[1]);
-            lastTurn = attack[0];
+            //현재 체력이 없으면 -1 리턴
+            if (now <= 0) return -1;
+            
+            //체력 충전 가능 횟수: 몬스터한테 맞기 전까지 범위만큼
+            int healCount = attack[0] - lastAttack - 1;
+            //추가 체력 수급 가능 여부: 체력 충전 가능 횟수가 연속 성공 기준에 부합하는지
+            int addHeal = healCount / success;
+            
+            //체력 충전 가능하면 1초당 충전할 수 있는 만큼 충전
+            now = Math.min(health, now + (healCount * bandage[1]));
+            //가능하면 추가 체력 수급
+            now = Math.min(health, now + (addHeal * bandage[2]));
+            
+            //몬스터 공격
+            now -= attack[1];
+            lastAttack = attack[0];
         }
-        
-        //몬스터 공격 횟수만큼 진행
-        int count = 0, maxHealth = health;
-        for (int i = 1; i <= lastTurn; i++) {
-            
-            //몬스터가 공격하는 턴이 있는 경우
-            if (monster.containsKey(i)) {
-                health -= monster.get(i); //몬스터 공격
-                count = 0; //연속 성공 실패
-                
-                //체력이 없는 경우
-                if (health <= 0) return -1;
-                continue;
-            }
-            
-            health += heal; //체력 회복
-            count++; //연속 성공
-            
-            //연속 치료에 성공한 경우, 추가 회복
-            if (count == skill) {
-                health += addHeal;
-                count = 0;
-            }
-            
-            //이미 최대 체력인 경우, 변동사항 없음
-            if (health > maxHealth) health = maxHealth;
-        }
-        return health;
+        return now <= 0 ? -1 : now;
     }
 }
