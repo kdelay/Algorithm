@@ -1,13 +1,8 @@
 class Solution {
     public int solution(int[][] dots) {
         
-        int lx = 256, ly = -256, rx = -256, ry = 256;
-        for (int i = 0; i < dots.length; i++) {
-            lx = Math.min(lx, dots[i][0]);
-            ly = Math.max(ly, dots[i][1]);
-            rx = Math.max(rx, dots[i][0]);
-            ry = Math.min(ry, dots[i][1]);
-        }
-        return Math.abs((rx - lx) * (ry - ly));
+        int x = Math.max(Math.abs(dots[0][0] - dots[1][0]), Math.abs(dots[0][0] - dots[2][0]));
+        int y = Math.max(Math.abs(dots[0][1] - dots[1][1]), Math.abs(dots[0][1] - dots[2][1]));
+        return x * y;
     }
 }
