@@ -1,21 +1,15 @@
 class Solution {
     public int[] solution(String[] keyinput, int[] board) {
         
-        int x = 0, y = 0;
+        int[] loc = {0, 0};
         int bx = board[0]/2, by = board[1]/2;
         
         for (String key : keyinput) {
-            if (key.equals("up")) y++;
-            else if (key.equals("down")) y--;
-            else if (key.equals("left")) x--;
-            else if (key.equals("right")) x++;
-            
-            if (x < 0 && x < (bx * -1)) x = (bx * -1);
-            else if (x > 0 && x > bx) x = bx;
-        
-            if (y < 0 && y < (by * -1)) y = (by * -1);
-            else if (y > 0 && y > by) y = by;
+            if (key.equals("up")) loc[1] += (loc[1] < by) ? 1 : 0;
+            else if (key.equals("down")) loc[1] -= (loc[1] > -by) ? 1 : 0;
+            else if (key.equals("left")) loc[0] -= (loc[0] > -bx) ? 1 : 0;
+            else if (key.equals("right")) loc[0] += (loc[0] < bx) ? 1 : 0;
         }
-        return new int[]{x, y};
+        return loc;
     }
 }
