@@ -4,18 +4,11 @@ class Solution {
     public int[] solution(int[] array, int[][] commands) {
         
         int[] answer = new int[commands.length];
-        for (int co = 0; co < commands.length; co++) {
-            int i = commands[co][0];
-            int j = commands[co][1];
-
-            //i~j까지 자름
-            List<Integer> list = new ArrayList<>();
-            for (int b = i-1; b <= j-1; b++) {
-                list.add(array[b]);
-            }
-            //정렬
-            Collections.sort(list);
-            answer[co] = list.get(commands[co][2]-1);
+        for (int i = 0; i < commands.length; i++) {
+            //범위 만큼 자름
+            int[] tmp = Arrays.copyOfRange(array, commands[i][0]-1, commands[i][1]);
+            Arrays.sort(tmp); //오름차순 정렬
+            answer[i] = tmp[commands[i][2]-1];
         }
         return answer;
     }
