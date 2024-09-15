@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.*;
 
 class Solution {
     public int[] solution(int[] answers) {
@@ -14,17 +15,12 @@ class Solution {
             if (two[i % 8] == answers[i]) answer[1]++;
             if (three[i % 10] == answers[i]) answer[2]++;
         }
+        //최댓값
+    	int max = Arrays.stream(answer).max().getAsInt();
         
-        //최댓 값 찾기
-        int max = answer[0];
-        for (int i = 1; i <= 2; i++) {
-            max = Math.max(max, answer[i]);
-        }
-        
-        List<Integer> list = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            if (max <= answer[i]) list.add(i+1);
-        }
-        return list.stream().mapToInt(Integer::intValue).toArray();
+        return IntStream.range(0, 3)
+            .filter(i -> answer[i] >= max)
+            .map(i -> i + 1) //index
+            .toArray();
     }
 }
