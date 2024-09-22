@@ -14,6 +14,6 @@ class Solution {
                 stack.pop();
             }
         }
-        return stack.isEmpty() ? true : false;
+        return stack.isEmpty();
     }
 }
