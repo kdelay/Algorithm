@@ -1,18 +1,19 @@
-import java.util.ArrayDeque;
+import java.util.*;
 
 class Solution {
     boolean solution(String s) {
-        ArrayDeque<Character> stack = new ArrayDeque<>();
         
-        char[] a = s.toCharArray();
-        for ( char c : a) {
-            if (c == '(') {
-                stack.push(c);
+        Stack<Character> stack = new Stack<>();
+        
+        for (char b : s.toCharArray()) {
+            if (b == '(') {
+                stack.push(b);
             } else {
-                if (stack.isEmpty() || stack.pop() == c)
-                    return false;
+                //비어있는 경우 pop 할 수 없다.
+                if (stack.isEmpty()) return false;
+                stack.pop();
             }
         }
-        return stack.isEmpty();
+        return stack.isEmpty() ? true : false;
     }
 }
