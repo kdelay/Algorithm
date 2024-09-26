@@ -1,10 +1,10 @@
 # [level 1] 2016년 - 12901 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12901?language=cpp) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12901) 
 
 ### 성능 요약
 
-메모리: 4.2 MB, 시간: 0.03 ms
+메모리: 74.6 MB, 시간: 0.03 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2024년 09월 26일 17:10:04
+2024년 09월 26일 19:27:23
 
 ### 문제 설명
 
