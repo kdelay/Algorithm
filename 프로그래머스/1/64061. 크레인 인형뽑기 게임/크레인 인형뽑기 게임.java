@@ -1,42 +1,32 @@
 import java.util.*;
 
 class Solution {
-    /**
-     * @param board 격자
-     * @param moves 크레인 작동 위치
-     * @return 터트려져 사라진 인형의 개수
-     */
-    public static int solution(int[][] board, int[] moves) {
-        ArrayDeque<Integer>[] stack = new ArrayDeque[board.length];
-
-        //stack 초기화
-        for (int i = 0; i < stack.length; i++) {
-            stack[i] = new ArrayDeque<>();
-        }
-
-        //board 순환
-        for (int i = board.length-1; i >= 0; i--) {
-            for (int j = 0; j < board[i].length; j++) {
-                //인형이 있는 경우만 stack 열에 추가한다.
-                if (board[i][j] > 0) {
-                    stack[j].push(board[i][j]);
+    public int solution(int[][] board, int[] moves) {
+        
+        Stack<Integer> stack = new Stack<>();
+        int answer = 0;
+        
+        //뽑기 횟수만큼 진행
+        for (int move : moves) {
+            for (int i = 0; i < board.length; i++) {
+                int tmp = board[i][move - 1];
+                //인형이 있는 경우만 뽑기 진행
+                if (tmp > 0) {
+                    //바구니에 넣기
+                   stack.push(tmp);
+                    //인형 뽑기
+                    board[i][move - 1] = 0;
+                    break;
                 }
             }
-        }
-
-        ArrayDeque<Integer> bucket = new ArrayDeque<>();
-        int answer = 0;
-
-        for (int move : moves) {
-
-            if (!stack[move - 1].isEmpty()) {
-                int doll = stack[move - 1].pop();
-
-                if (!bucket.isEmpty() && bucket.peek() == doll) {
-                    bucket.pop();
-                    answer += 2;
-                } else {
-                    bucket.push(doll);
+            //바구니에 연속해서 쌓인 인형이 있을 경우 제거
+            if (stack.size() > 1) {
+                int pop1 = stack.pop();
+                int pop2 = stack.pop();
+                if (pop1 == pop2) answer += 2;
+                else {
+                    stack.push(pop2);
+                    stack.push(pop1);
                 }
             }
         }
