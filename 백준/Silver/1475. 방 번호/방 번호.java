@@ -1,21 +1,23 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.util.StringTokenizer;
 
 public class Main {
-  public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    char[] N = br.readLine().toCharArray();
-    int[] visited = new int[10]; // 방문 노드
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(bufferedReader.readLine());
+        char[] input = st.nextToken().toCharArray();
 
-    for (int i=0; i<N.length; i++){
-      int a = N[i] - '0';
-      if (a == 9) a = 6; // 9인 경우 6으로 세팅해서 동일한 인덱스로 설정
-      visited[a]++;
+        int[] card = new int[9];
+        for (char c : input) {
+            int num = c - '0';
+            if (num == 9 || num == 6) card[6]++;
+            else card[num]++;
+        }
+        card[6] = (card[6] + 1) / 2;
+        int max = 0;
+        for (int c : card) max = Math.max(max, c);
+        System.out.println(max);
     }
-    visited[6] = visited[6]/2 + visited[6]%2; // 두 번 더해진 횟수를 2로 나누기
-    Arrays.sort(visited); // 오름차순 정렬
-    System.out.println(visited[9]); // Max 값 : 카드 set 개수
-  }
 }
