@@ -1,37 +1,30 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-  public static void main(String[] args) throws IOException {
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    StringTokenizer st = new StringTokenizer(br.readLine());
-    int N = Integer.parseInt(st.nextToken());
-    int K = Integer.parseInt(st.nextToken());
-    Queue<Integer> queue = new LinkedList<>();
-    StringBuilder sb = new StringBuilder();
-    sb.append("<");
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int N = Integer.parseInt(st.nextToken());
+        int K = Integer.parseInt(st.nextToken());
 
-    for (int i=1; i<=N; i++) queue.add(i); // 1 ~ N까지의 수 저장
-    while (true) {
-      if (queue.size() == 1) { // queue가 1개 남은 경우
-        sb.append(queue.poll()).append(">");
-        break;
-      }
-      int cnt = 1;
-      while (true) {
-        if (cnt == K) { // K번째인 경우 제거되는 순서 값 저장
-          sb.append(queue.poll()).append(", ");
-          break;
-        } else { // K번 만큼 요세푸스 순열 동작
-          cnt++;
-          queue.add(queue.poll());
+        //초기 값 세팅
+        Deque<Integer> deque = new LinkedList<>();
+        for (int i = N; i >= 1; i--) deque.add(i);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<");
+        while (deque.size() != 1) {
+            //1 ~ K-1 번 만큼 pop 후, push
+            for (int i = 1; i <= K - 1; i++) {
+                deque.addFirst(deque.pollLast());
+            }
+            sb.append(deque.pollLast()).append(", ");
         }
-      }
+        //1개 남은 경우 저장하고 종료
+        sb.append(deque.poll()).append(">");
+        System.out.println(sb);
     }
-    System.out.println(sb);
-  }
 }
