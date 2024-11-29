@@ -31,7 +31,7 @@ class Solution {
     private void divisionAmount(String name, int amount) {
         
         //이익 분배
-        int tenPercent = (int)((double)amount * 0.1);
+        int tenPercent = amount / 10;
         money.put(name, (money.get(name) + amount - tenPercent));
         
         //종료 조건: "-" 이거나, 금액이 1원 미만이면 종료
