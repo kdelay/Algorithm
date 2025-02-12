@@ -1,26 +1,26 @@
-import java.util.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 class Solution {
     public int[] solution(int[] answers) {
-        
-        int[] one = new int[]{1, 2, 3, 4, 5};
-        int[] two = new int[]{2, 1, 2, 3, 2, 4, 2, 5};
-        int[] three = new int[]{3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
-        
-        //정답 횟수
-        int[] answer = new int[3];
+        int[] scores = new int[3];
+        int[] one = {1, 2, 3, 4, 5};
+        int[] two = {2, 1, 2, 3, 2, 4, 2, 5};
+        int[] three = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+
         for (int i = 0; i < answers.length; i++) {
-            if (one[i % 5] == answers[i]) answer[0]++;
-            if (two[i % 8] == answers[i]) answer[1]++;
-            if (three[i % 10] == answers[i]) answer[2]++;
+            if (one[i % one.length] == answers[i]) scores[0]++;
+            if (two[i % two.length] == answers[i]) scores[1]++;
+            if (three[i % three.length] == answers[i]) scores[2]++;
         }
-        //최댓값
-    	int max = Arrays.stream(answer).max().getAsInt();
         
-        return IntStream.range(0, 3)
-            .filter(i -> answer[i] >= max)
-            .map(i -> i + 1) //index
-            .toArray();
+        int maxScore = Arrays.stream(scores)
+                .max()
+                .orElse(0);
+
+        return IntStream.range(0, scores.length)
+                .filter(i -> scores[i] == maxScore)
+                .map(i -> i + 1)
+                .toArray();
     }
 }
