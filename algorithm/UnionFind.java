@@ -3,7 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //--- Union-Find Algorithm
-public class Solution {
+public class UnionFind {
 
     //{0,1,2} -> 노드 1과 2에 대해 union 연산
     //{1,1,3} -> 노드 1과 3이 같은 집합에 속해 있으면 true, 아니면 false 를 반환하는 equals 연산
