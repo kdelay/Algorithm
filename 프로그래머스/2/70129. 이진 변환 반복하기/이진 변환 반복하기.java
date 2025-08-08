@@ -1,21 +1,23 @@
 class Solution {
+    static int remove = 0;
+    static int count = 0;
+    
     public int[] solution(String s) {
-        
-        //answer[0]: 이진 변환 횟수, answer[1]: 0 제거 개수
-        int[] answer = new int[2];
-        
-        //s 가 1이면 중단
-        int tmp = 0;
-        while (!s.equals("1")) {
-            answer[1] += s.length(); //s 초기 길이
-            s = s.replaceAll("0", ""); //정규식으로 0 제거
-            tmp = s.length(); //0이 제거된 s 길이
-            
-            s = Integer.toBinaryString(tmp); //이진법 진행
-            
-            answer[1] -= tmp; //초기 길이 - 0 제거 길이
-            answer[0]++; //이진 변환 횟수
+        if (s.equals("1")) return new int[]{0, 0};
+        toBinary(s);
+        return new int[]{count, remove};
+    }
+
+    private void toBinary(String s) {
+        if (!s.equals("1")) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < s.length(); i++) {
+                char c = s.charAt(i);
+                if (c == '0') remove++;
+                else sb.append(c);
+            }
+            count++;
+            toBinary(Integer.toBinaryString(sb.length()));
         }
-        return answer;
     }
 }
