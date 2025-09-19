@@ -1,11 +1,13 @@
 class Solution {
     public int solution(int n) {
-        int[] dp = new int[n+1];
-        dp[0] = 0;
-        dp[1] = 1;
-        for (int i = 2; i < dp.length; i++) {
-            dp[i] = (dp[i-1] + dp[i-2]) % 1234567;
+        int[] A = new int[100001];
+        A[0] = 0;
+        A[1] = 1;
+
+        for (int i = 0; i <= n; i++) {
+            if (i == 1 || i == 0) continue;
+            A[i] = ( (A[i-1] % 1234567) + (A[i-2] % 1234567) ) % 1234567;
         }
-        return dp[n];
+        return A[n];
     }
 }
